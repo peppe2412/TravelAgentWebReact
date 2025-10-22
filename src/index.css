@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  background-color: rgb(34, 33, 33);
+  color: whitesmoke;
+  font-family: "Roboto", sans-serif;
+}
+
+.shadow-main{
+  box-shadow: 1px 1px 8px rgb(255, 94, 0);
+}
+
+.chat-box{
+  overflow-y: auto;
+  max-height: 70vh;
+  padding-bottom: 100px;
+}
+
+.user-message-box {
+  background-color: rgba(255, 94, 0, 0.671);
+  border-radius: 50px;
+  padding: 10px 15px;
+  margin-inline-end: 20px;
+  animation: user-message-effect 0.3s ease-in-out;
+}
+
+@keyframes user-message-effect{
+  from{
+    opacity: 0;
+    transform: translateX(0);
+  }
+  to{
+    opacity: 1;
+    transform: translate3d(20px);
+  }
+}
+
+.ai-message-box {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.input-message {
+  padding: 20px;
+  border-radius: 50px;
+  background-color: rgb(62, 60, 60);
+  border: none;
+  position: fixed;
+  bottom: 10px;
+}
+
+.button-send {
+  background-color: rgb(255, 94, 0);
+  border: none;
+  border-radius: 50px;
+  padding: 5px 10px;
+  margin-left: 40px;
+  position: absolute;
+  right: -750px;
+  bottom: -30px;
+  cursor: pointer;
+}
