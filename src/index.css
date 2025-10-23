@@ -27,7 +27,7 @@
 @keyframes user-message-effect{
   from{
     opacity: 0;
-    transform: translateX(0);
+    transform: translate3d(0);
   }
   to{
     opacity: 1;

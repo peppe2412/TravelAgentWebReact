@@ -1,4 +1,5 @@
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
@@ -92,10 +93,20 @@ export default function ChatBot() {
                 >
                   <span
                     className={`${
-                      msg.role == "user" ? "user-message-box shadow-main" : "ai-message-box"
+                      msg.role == "user"
+                        ? "user-message-box shadow-main"
+                        : "ai-message-box"
                     }`}
                   >
-                    {msg.content}
+                    <ReactMarkdown
+                      components={{
+                        p: ({ node, ...props }) => (
+                          <p {...props} className="bg-transparent m-0" />
+                        ),
+                      }}
+                    >
+                      {msg.content}
+                    </ReactMarkdown>
                   </span>
                 </div>
               ))}
