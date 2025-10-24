@@ -94,7 +94,7 @@ export default function ChatBot() {
                   <span
                     className={`${
                       msg.role == "user"
-                        ? "user-message-box shadow-main"
+                        ? "user-message-box shadow-main bg-main"
                         : "ai-message-box"
                     }`}
                   >
@@ -111,26 +111,24 @@ export default function ChatBot() {
                 </div>
               ))}
               <div ref={chatEndRef}></div>
-              <div className="d-flex justify-content-center position-fixed bottom-0 mt-5 mb-5">
-                <div className="position-relative w-75">
-                  <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key == "Enter" && sendMessage()}
-                    className="input-message w-50 shadow-main"
-                    placeholder="Inserisci messaggio...."
-                    aria-describedby="addon-wrapping"
-                  />
+            </div>
+            <div className="input-button-box">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key == "Enter" && sendMessage()}
+                className="input-message w-100 mx-2 shadow-main"
+                placeholder="Inserisci messaggio...."
+                aria-describedby="addon-wrapping"
+              />
 
-                  <button onClick={sendMessage} className="button-send fs-3">
-                    <FontAwesomeIcon
-                      icon={faArrowUp}
-                      className="bg-transparent"
-                    />
-                  </button>
-                </div>
-              </div>
+              <button
+                onClick={sendMessage}
+                className="button-send bg-main mx-2"
+              >
+                <FontAwesomeIcon icon={faArrowUp} className="bg-transparent" />
+              </button>
             </div>
           </div>
         </div>
