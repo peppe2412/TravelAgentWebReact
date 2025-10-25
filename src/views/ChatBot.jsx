@@ -1,4 +1,5 @@
 import axios from "axios";
+import errorSoundFile from "../audio/error-sound.mp3";
 import ReactMarkdown from "react-markdown";
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,12 +25,15 @@ export default function ChatBot() {
   }, []);
 
   const closeSpanError = () => {
-      setError('');
-    };
+    setError("");
+  };
+
+  const errorSound = useRef(new Audio(errorSoundFile));
 
   const sendMessage = async () => {
     if (!input.trim()) {
       setError("Inserisci il tuo messaggio!");
+      errorSound.current.play();
       return;
     }
 
@@ -101,6 +105,20 @@ export default function ChatBot() {
         </div>
       </header>
 
+      {error && (
+        <div className="d-flex justify-content-center">
+          <span className="bg-danger p-3 fs-4">
+            {error}
+            <button
+              className="bg-transparent mx-4 button-close"
+              onClick={closeSpanError}
+            >
+              <FontAwesomeIcon icon={faXmark} className="bg-transparent" />
+            </button>
+          </span>
+        </div>
+      )}
+
       <main className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-lg-8 fs-5">
@@ -143,23 +161,6 @@ export default function ChatBot() {
               <div ref={chatEndRef}></div>
             </div>
 
-            {error && (
-              <div className="d-flex justify-content-center">
-                <div className="bg-danger p-3">
-                  <span className="bg-transparent">{error}</span>
-                  <button
-                    className="bg-transparent mx-4 button-close"
-                    onClick={closeSpanError}
-                  >
-                    <FontAwesomeIcon
-                      icon={faXmark}
-                      className="bg-transparent"
-                    />
-                  </button>
-                </div>
-              </div>
-            )}
-
             <div className="input-button-box">
               <input
                 type="text"
@@ -170,7 +171,6 @@ export default function ChatBot() {
                 placeholder="Inserisci messaggio...."
                 aria-describedby="addon-wrapping"
               />
-
               <button onClick={sendMessage} className="button-send bg-main">
                 <FontAwesomeIcon icon={faArrowUp} className="bg-transparent" />
               </button>
