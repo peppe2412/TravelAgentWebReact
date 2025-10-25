@@ -10,10 +10,6 @@
   background-color: rgb(255, 94, 0);
 }
 
-.shadow-main {
-  box-shadow: 1px 1px 8px rgb(255, 94, 0);
-}
-
 .chat-box {
   overflow-y: auto;
   max-height: 70vh;
@@ -44,32 +40,26 @@
 }
 
 .input-button-box {
+  box-shadow: 1px 1px 3px rgb(58, 58, 58);
+  border-radius: 20px;
+  padding: 40px;
   position: absolute;
   display: flex;
   bottom: 40px;
   width: 100%;
   max-width: 50%;
+  left: 25%;
+  gap: 10px;
 }
 
-@media (max-width: 768px) {
-  .input-button-box {
-    position: unset;
-  }
-}
-
-@media (max-width: 1180px) {
-  .input-button-box {
-    position: unset;
-    max-width: 100%;
-    padding-bottom: 20px;
-  }
-}
 
 .input-message {
   padding: 20px;
   border-radius: 50px;
   background-color: rgb(62, 60, 60);
   border: none;
+  flex: 1;
+  min-width: 0;
 }
 
 .button-send {
@@ -77,4 +67,31 @@
   border-radius: 50px;
   padding: 20px;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .input-button-box {
+    position: fixed;
+    width: 90%;
+    padding: 20px;
+    padding-bottom: 0;
+    max-width: none;
+    left: 5%;
+  }
+
+  .input-message{
+    padding: 15px;
+  }
+
+  .button-send{
+    padding: 15px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .input-button-box {
+    position: absolute;
+    padding: 20px;
+    padding-bottom: 20px;
+  }
 }

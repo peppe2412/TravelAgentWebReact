@@ -8,9 +8,24 @@ export default function ChatBot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [showInitialMessage, setShowInitialMessage] = useState(true);
+  const [randomMessages, setRandomMessages] = useState("");
+
+  let strings = [
+    "Ciao, di cosa hai bisogno oggi?",
+    "Ciao, non lasciare che questa avventura ti sfugga: prenota ora il tuo viaggio!",
+    "Ciao, che tipo di viaggio hai in mente?",
+  ];
+
+  useEffect(() => {
+    let randomIndex = Math.floor(Math.random() * strings.length);
+    setRandomMessages(strings[randomIndex]);
+  }, []);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+
+    if (showInitialMessage) setShowInitialMessage(false);
 
     const newMessage = [...messages, { role: "user", content: input }].map(
       (msg) => ({
@@ -73,7 +88,7 @@ export default function ChatBot() {
       <header className="container py-5">
         <div className="row justify-content-center">
           <div className="col-12 col-lg-8">
-            <h1 className="text-center display-3">Travel Agent</h1>
+            <h1 className="text-center display-2">Travel Agent</h1>
           </div>
         </div>
       </header>
@@ -82,51 +97,56 @@ export default function ChatBot() {
         <div className="row justify-content-center">
           <div className="col-12 col-lg-8 fs-5">
             <div className="chat-box">
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`${
-                    msg.role == "user"
-                      ? "d-flex justify-content-end mb-5 mt-5"
-                      : "d-flex justify-content-start"
-                  }`}
-                >
-                  <span
+              {showInitialMessage && (
+                <h3 className="text-center display-5 fw-bold m-0">
+                  {randomMessages}
+                </h3>
+              )}
+
+              {!showInitialMessage &&
+                messages.map((msg, i) => (
+                  <div
+                    key={i}
                     className={`${
                       msg.role == "user"
-                        ? "user-message-box shadow-main bg-main"
-                        : "ai-message-box"
+                        ? "d-flex justify-content-end mb-5 mt-5"
+                        : "d-flex justify-content-start"
                     }`}
                   >
-                    <ReactMarkdown
-                      components={{
-                        p: ({ node, ...props }) => (
-                          <p {...props} className="bg-transparent m-0" />
-                        ),
-                      }}
+                    <span
+                      className={`${
+                        msg.role == "user"
+                          ? "user-message-box bg-main"
+                          : "ai-message-box"
+                      }`}
                     >
-                      {msg.content}
-                    </ReactMarkdown>
-                  </span>
-                </div>
-              ))}
+                      <ReactMarkdown
+                        components={{
+                          p: ({ node, ...props }) => (
+                            <p {...props} className="bg-transparent m-0" />
+                          ),
+                        }}
+                      >
+                        {msg.content}
+                      </ReactMarkdown>
+                    </span>
+                  </div>
+                ))}
               <div ref={chatEndRef}></div>
             </div>
+
             <div className="input-button-box">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key == "Enter" && sendMessage()}
-                className="input-message w-100 mx-2 shadow-main"
+                className="input-message"
                 placeholder="Inserisci messaggio...."
                 aria-describedby="addon-wrapping"
               />
 
-              <button
-                onClick={sendMessage}
-                className="button-send bg-main mx-2"
-              >
+              <button onClick={sendMessage} className="button-send bg-main">
                 <FontAwesomeIcon icon={faArrowUp} className="bg-transparent" />
               </button>
             </div>
