@@ -52,6 +52,9 @@
   gap: 10px;
 }
 
+.button-close{
+  border: none;
+}
 
 .input-message {
   padding: 20px;

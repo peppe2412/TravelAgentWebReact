@@ -2,7 +2,7 @@ import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function ChatBot() {
   const [messages, setMessages] = useState([]);
@@ -10,6 +10,7 @@ export default function ChatBot() {
   const [isTyping, setIsTyping] = useState(false);
   const [showInitialMessage, setShowInitialMessage] = useState(true);
   const [randomMessages, setRandomMessages] = useState("");
+  const [error, setError] = useState("");
 
   let strings = [
     "Ciao, di cosa hai bisogno oggi?",
@@ -22,8 +23,15 @@ export default function ChatBot() {
     setRandomMessages(strings[randomIndex]);
   }, []);
 
+  const closeSpanError = () => {
+      setError('');
+    };
+
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!input.trim()) {
+      setError("Inserisci il tuo messaggio!");
+      return;
+    }
 
     if (showInitialMessage) setShowInitialMessage(false);
 
@@ -134,6 +142,23 @@ export default function ChatBot() {
                 ))}
               <div ref={chatEndRef}></div>
             </div>
+
+            {error && (
+              <div className="d-flex justify-content-center">
+                <div className="bg-danger p-3">
+                  <span className="bg-transparent">{error}</span>
+                  <button
+                    className="bg-transparent mx-4 button-close"
+                    onClick={closeSpanError}
+                  >
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      className="bg-transparent"
+                    />
+                  </button>
+                </div>
+              </div>
+            )}
 
             <div className="input-button-box">
               <input
